@@ -21,15 +21,15 @@ function getResult(arg) {
 		for (let size = 1; size <= len / 2; size++) {
 			const chunk = str.slice(0, size)
 
-			let valid = true
+			let invalid = true
 			for (let pos = size; pos < len; pos += size) {
 				if (str.slice(pos, pos + size) !== chunk) {
-					valid = false
+					invalid = false
 					break
 				}
 			}
 
-			if (valid) return true
+			if (invalid) return true
 		}
 
 		return false
