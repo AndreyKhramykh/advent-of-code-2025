@@ -1,4 +1,4 @@
-function getResult(arg) {
+function getResult(input) {
 	function getData(data) {
 		return data.split('\n')
 	}
@@ -17,31 +17,40 @@ function getResult(arg) {
 	}
 
 	function getJoltage(string) {
-		let currentDigit = getMaxDigit(string)
-		let nextDigit = {}
-		const length = string.length
-		let result = []
-
-		for (let k = 1; k < 13; k++) {
-			// console.log(currentDigit.value, currentDigit.index)
-			// console.log(nextDigit.value, nextDigit.index)
-			if (currentDigit.index == length - 1) {
-				nextDigit = currentDigit
-				currentDigit = getMaxDigit(string.slice(0, currentDigit.index))
-				// length--
-			} else {
-				nextDigit = getMaxDigit(string.slice(currentDigit.index + k))
-			}
-			result.push(currentDigit)
-			currentDigit = nextDigit
+		function getCurrentBlock(string, startIndex, endIndex) {
+			return string.slice(startIndex, endIndex)
 		}
 
-		return result
-	}
-	console.log(getJoltage(getData(arg)[2]))
+		function getEndIndex(string) {
+			return string.length - batteriesNum + 1
+		}
+		const BATTERY_COUNT = 12
 
-	// let result = getData(arg).map((string) => getJoltage(string)).reduce((acc, curr) => acc + curr)
-	// console.log(result)
+		let currentString = string
+		let currentIndex = 0
+		let batteriesNum = BATTERY_COUNT
+		const resultArr = []
+
+		while (resultArr.length < BATTERY_COUNT) {
+			const currentMaxDigit = getMaxDigit(
+				getCurrentBlock(currentString, 0, getEndIndex(currentString)),
+			)
+			resultArr.push(currentMaxDigit.value)
+			currentIndex = currentMaxDigit.index
+			batteriesNum -= 1
+			currentString = currentString.slice(
+				currentIndex + 1,
+				currentString.length,
+			)
+		}
+
+		return Number(resultArr.join(''))
+	}
+
+	let result = getData(input)
+		.map((string) => getJoltage(string))
+		.reduce((acc, curr) => acc + curr)
+	console.log(result)
 }
 
 const fs = require('node:fs')
@@ -49,7 +58,7 @@ const fs = require('node:fs')
 const samplePath = 'sample.txt'
 const fullPath = 'full.txt'
 
-fs.readFile(samplePath, 'utf-8', (error, data) => {
+fs.readFile(fullPath, 'utf-8', (error, data) => {
 	if (error) {
 		console.log(`output->error`, error)
 	}
