@@ -30,7 +30,9 @@ function getResult(arg) {
 		return Number(String(firstDigit.value) + String(secondDigit.value))
 	}
 
-	let result = getData(arg).map((string) => getJoltage(string)).reduce((acc, curr) => acc + curr)
+	let result = getData(arg)
+		.map((string) => getJoltage(string))
+		.reduce((acc, curr) => acc + curr)
 	console.log(result)
 }
 
@@ -45,3 +47,5 @@ fs.readFile(fullPath, 'utf-8', (error, data) => {
 	}
 	getResult(data)
 })
+
+console.log('check git');
