@@ -12,6 +12,7 @@ function getResult(arg) {
 	const columns = grid[0].length
 	let resultCounter = 0
 	let iterationCounter = 0
+	
 	// Get rolls quantity function
 
 	function getRolls(grid, indexRow, indexColumn) {
