@@ -31,9 +31,6 @@ function getResult(arg) {
 			.map((row) => row[x])
 			.join('')
 			.trim()
-
-		console.log('digits =', Number(digits))
-
 		if (digits === '') {
 			getTotal()
 			continue
